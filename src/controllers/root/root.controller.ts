@@ -6,9 +6,17 @@ import { PolkadotJs } from 'utils/polkadotjs.utils';
 export class RootController {
     constructor(private configService: ConfigService) {}
     @Get()
-    async connectSubstrate(): Promise<string> {
+    async connectSubstrate(): Promise<Object> {
         const {polkadotApi} = new PolkadotJs();
         const api = await polkadotApi(this.configService.get<string>("PROVIDER_SOCKET"));
-        return "Heya Hotel Manager connected to Substrate node with genesis block hash: "+api.genesisHash.toHex();
+        const chainName = await api.rpc.system.chain();
+        const latestHeader = await api.rpc.chain.getHeader();
+        return {
+            "msg": "Heya Hotel Manager connected to Substrate",
+            "genesis block hash": api.genesisHash.toHex(),
+            chainName,
+            latestHeader,
+        }
+
     }
 }
