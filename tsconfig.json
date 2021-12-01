@@ -12,5 +12,6 @@
     "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
   }
 }
