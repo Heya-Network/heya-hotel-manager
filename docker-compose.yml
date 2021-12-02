@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "${MIKRO_ORM_USER}"
+      POSTGRES_PASSWORD: "${MIKRO_ORM_PASSWORD}"
+      POSTGRES_DB: "${SOME_VAR}"
+    ports:
+      - "${MIKRO_ORM_PORT}:${MIKRO_ORM_PORT}"
+volumes:
+  pg_data:
