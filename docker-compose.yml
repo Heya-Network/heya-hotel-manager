@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: "${MIKRO_ORM_USER}"
       POSTGRES_PASSWORD: "${MIKRO_ORM_PASSWORD}"
-      POSTGRES_DB: "${SOME_VAR}"
+      POSTGRES_DB: "${MIKRO_ORM_DB_NAME}"
     ports:
       - "${MIKRO_ORM_PORT}:${MIKRO_ORM_PORT}"
 volumes:
