@@ -48,4 +48,4 @@ Keep up to date on Heya's progress on our [website](http://www.heya.network/).
 
 ## License
 
-heya-channel-manager is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+heya-hotel-manager is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
