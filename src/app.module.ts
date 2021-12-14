@@ -1,8 +1,11 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RootController, HotelsController, BalancesController } from 'controllers';
-import { HotelsService, SubstrateService } from 'services';
+import { ConfigModule } from '@nestjs/config';
+import { HotelsModule } from './hotels/hotels.module';
+import { UsersModule } from './users/users.module';
+import { RootModule } from './root/root.module';
+import { BalancesModule } from './balances/balances.module';
+import { Substrate } from 'utils/substrate.utils';
 
 @Module({
   imports: [
@@ -11,9 +14,17 @@ import { HotelsService, SubstrateService } from 'services';
       cache: true,
     }),
     MikroOrmModule.forRoot(),
+    HotelsModule,
+    UsersModule,
+    RootModule,
+    BalancesModule,
   ],
-  
-  controllers: [RootController, BalancesController, HotelsController],
-  providers: [SubstrateService, HotelsService],
+  providers: [
+    Substrate,
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: ResponseInterceptor,
+    // },
+  ],
 })
 export class AppModule {}
