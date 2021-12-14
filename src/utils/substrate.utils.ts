@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PolkadotJs } from 'utils/polkadotjs.utils';
 
 @Injectable()
-export class SubstrateService {
-  // static getBalance: any;
+export class Substrate {
   constructor(private configService: ConfigService) {}
 
   async getBalance(ss58: string): Promise<Object> {

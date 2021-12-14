@@ -1,21 +1,22 @@
 import { BaseEntity } from "@mikro-orm/core";
 import { Entity, PrimaryKey, Property } from "@mikro-orm/core/decorators";
+import { CreateHotelDto } from "../dto/create-hotel.dto";
 
 @Entity()
 export class Hotel extends BaseEntity<Hotel, 'id'> {
 
     @PrimaryKey()
-    id!: string;
+    id!: number;
     
-    @Property({ nullable: true })
-    name?: string;
+    @Property()
+    name!: string;
 
     @Property()
     status!: string;
 
-    constructor(ss58: string) {
+    constructor(dto: CreateHotelDto) {
         super();
-        this.id = ss58;
+        this.name = dto.name;
         this.status = "PENDING";
     }
 }
