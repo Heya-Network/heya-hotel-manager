@@ -11,6 +11,7 @@ async function bootstrap() {
       .setTitle('Heya Property Manager API')
       .setDescription("Heya's Property manager API Documentation")
       .setVersion('0.1')
+      .addBearerAuth()
       .build();
 
     const document = SwaggerModule.createDocument(app, config);

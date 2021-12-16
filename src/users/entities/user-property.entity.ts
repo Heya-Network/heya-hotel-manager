@@ -1,12 +1,12 @@
-import { Collection, Entity, ManyToMany, ManyToOne, PrimaryKeyType } from "@mikro-orm/core";
+import { Entity, ManyToOne, PrimaryKeyType } from "@mikro-orm/core";
 import { Hotel } from "../../hotels/entities/hotel.entity";
-import { User } from "./user.entity";
+import { Users } from "./user.entity";
 
 @Entity()
 export class UserProperty {
 
   @ManyToOne({ primary: true })
-  User: User;
+  User: Users;
 
   @ManyToOne({ primary: true })
   Hotel: Hotel;
@@ -17,7 +17,7 @@ export class UserProperty {
 
   [PrimaryKeyType]: [number, number];
 
-  constructor(user: User, hotel: Hotel) {
+  constructor(user: Users, hotel: Hotel) {
     this.User = user;
     this.Hotel = hotel;
   }

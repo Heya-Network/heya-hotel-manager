@@ -9,6 +9,9 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    if (!createUserDto.polkadotSs58 && !createUserDto.metamaskHex) {
+      return; //TODO: incorrect request error
+    }
     return this.usersService.create(createUserDto);
   }
 

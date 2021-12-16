@@ -3,7 +3,7 @@ import { EntityManager, FilterQuery, MikroORM } from '@mikro-orm/core';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { Hotel } from './entities/hotel.entity';
-import { User } from 'users/entities/user.entity';
+import { Users } from 'users/entities/user.entity';
 import { UserProperty } from 'users/entities/user-property.entity';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class HotelsService {
 
   async create(createHotelDto: CreateHotelDto): Promise<Hotel> {
     const hotel = new Hotel(createHotelDto);
-    const user = await this.em.findOneOrFail(User, createHotelDto.userId);
+    const user = await this.em.findOneOrFail(Users, createHotelDto.userId);
     if (user.properties.length === 1) {
       return; //only 1 hotel per user allowed
     }
@@ -26,9 +26,6 @@ export class HotelsService {
 
   findAll() {
     return this.em.getRepository(Hotel).findAndCount({});
-    // let hotels = await this.em.getRepository(Hotel).findAndCount('');
-    // console.log(hotels);
-    // return {data: hotels[0], total: hotels[1]}
   }
 
   findOne(id: number) {

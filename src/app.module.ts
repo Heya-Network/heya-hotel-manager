@@ -5,7 +5,7 @@ import { HotelsModule } from './hotels/hotels.module';
 import { UsersModule } from './users/users.module';
 import { RootModule } from './root/root.module';
 import { BalancesModule } from './balances/balances.module';
-import { Substrate } from 'utils/substrate.utils';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,9 +18,9 @@ import { Substrate } from 'utils/substrate.utils';
     UsersModule,
     RootModule,
     BalancesModule,
+    AuthModule,
   ],
   providers: [
-    Substrate,
     // {
     //   provide: APP_INTERCEPTOR,
     //   useClass: ResponseInterceptor,
