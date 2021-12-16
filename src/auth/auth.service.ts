@@ -27,7 +27,7 @@ export class AuthService {
     return null;
   }
 
-  async createJwt(user: Users) {
+  createJwt(user: Users) {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
@@ -38,7 +38,8 @@ export class AuthService {
     const user = new Users(createUserDto);
     user.password = await this.bcrypt.hashPassword(createUserDto.password);
     await this.em.persistAndFlush([user]);
-    return user;
+    delete user.password;
+    return {... user, ...this.createJwt(user)};
   }
 
   findAll() {
