@@ -1,4 +1,5 @@
-import { BaseEntity, Collection, Entity, ManyToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { BaseEntity, Collection, Entity, Enum, ManyToMany, PrimaryKey, Property } from "@mikro-orm/core";
+import { Role } from "../../auth/permissions/role.enum";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UserProperty } from "./user-property.entity";
 
@@ -24,6 +25,9 @@ export class Users extends BaseEntity<Users, 'id'> {
 
     @ManyToMany({ entity: 'UserProperty', fixedOrder: false })
     properties = new Collection<UserProperty>(this);
+
+    @Enum({ items: () => Role, array: true, default: [Role.Unverified] })
+    roles: Role[] = [Role.Unverified];
 
     constructor(dto: CreateUserDto) {
         super();

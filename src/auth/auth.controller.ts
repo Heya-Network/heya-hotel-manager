@@ -17,7 +17,6 @@ export class AuthController {
     return req.user;
   }
 
-
   @Post("register")
   create(@Body() createUserDto: CreateUserDto) {
     if (!createUserDto.polkadotSs58 && !createUserDto.metamaskHex) {

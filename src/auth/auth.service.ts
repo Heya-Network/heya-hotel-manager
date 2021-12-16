@@ -20,7 +20,6 @@ export class AuthService {
     const user = await this.usersService.findEmail(email);
     if (user) {
       if (await this.bcrypt.compare(pwd, user.password)) {
-        delete user.password;
         return this.createJwt(user);
       }
     }
@@ -28,9 +27,14 @@ export class AuthService {
   }
 
   createJwt(user: Users) {
-    const payload = { email: user.email, sub: user.id };
+    //set data inside JWT here
+    const payload = { 
+      email: user.email, 
+      sub: user.id, 
+      roles:user.roles,
+    };
     return {
-      access_token: this.jwtService.sign(payload),
+      jwt: this.jwtService.sign(payload),
     };
   }
 

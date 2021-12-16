@@ -9,7 +9,6 @@ import { UserProperty } from 'users/entities/user-property.entity';
 @Injectable()
 export class HotelsService {
   constructor(
-    // private readonly orm: MikroORM,
     private readonly em: EntityManager,
   ) {}
 
