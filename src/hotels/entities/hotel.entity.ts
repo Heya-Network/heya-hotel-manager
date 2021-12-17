@@ -8,7 +8,7 @@ export class Hotel extends BaseEntity<Hotel, 'id'> {
     @PrimaryKey()
     id!: number;
     
-    @Property()
+    @Property({ unique: true })
     name!: string;
 
     @Property()
