@@ -20,4 +20,4 @@ import { JwtModule } from "@nestjs/jwt";
     ],
     exports: [JwtModule]
 })
-export class CoreModule {}
+export class JWTModule {}
