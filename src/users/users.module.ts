@@ -9,14 +9,6 @@ import { JwtStrategy } from 'auth/jwt.strategy';
   providers: [
     UsersService, 
     Bcrypt,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: JwtAuthGuard,
-    // },
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: RolesGuard,
-    // },
     JwtStrategy
   ],
   exports: [UsersService],
