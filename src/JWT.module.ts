@@ -16,7 +16,7 @@ import { JwtModule } from "@nestjs/jwt";
             inject: [ConfigService],
           }),
         global: true
-      }
+      },
     ],
     exports: [JwtModule]
 })

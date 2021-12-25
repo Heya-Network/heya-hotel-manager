@@ -397,3 +397,7 @@ Temporary Items
 .env*
 !.env.example
 dist
+schema.gql
+
+# DELETE ONCE HITTING DEPLOYMENT PHASE
+Migration*.ts
