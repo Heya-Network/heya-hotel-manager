@@ -7,9 +7,7 @@ import { RoomType } from './entities/room-type.entity';
 
 @Injectable()
 export class RoomTypeService {
-  constructor(
-    private readonly em: EntityManager,
-  ) {}
+  constructor(private readonly em: EntityManager) {}
 
   async create(createRoomTypeInput: CreateRoomTypeInput) {
     const hotel = await this.em.findOneOrFail(Hotel, createRoomTypeInput.propertyId);
@@ -21,11 +19,11 @@ export class RoomTypeService {
   }
 
   findAll() {
-    return `This action returns all roomType`;
+    return this.em.getRepository(RoomType).findAndCount({});
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} roomType`;
+    return this.em.findOne(RoomType, id);
   }
 
   update(id: number, updateRoomTypeInput: UpdateRoomTypeInput) {

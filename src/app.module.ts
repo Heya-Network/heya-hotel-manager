@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { JWTModule } from 'JWT.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { RoomTypeModule } from 'room-type/room-type.module';
-import { RoomModule } from 'room/room.module';
+// import { RoomModule } from 'room/room.module';
 
 @Module({
   imports: [
@@ -18,11 +18,10 @@ import { RoomModule } from 'room/room.module';
       cache: true,
     }),
     MikroOrmModule.forRoot(),
-    GraphQLModule.forRoot({
-      installSubscriptionHandlers: true,
-      autoSchemaFile: "postgraphile/schema.gql",
-
-    }),
+    // GraphQLModule.forRoot({
+    //   installSubscriptionHandlers: true,
+    //   autoSchemaFile: "postgraphile/schema.gql",
+    // }),
     HotelsModule,
     UsersModule,
     RootModule,
@@ -30,7 +29,7 @@ import { RoomModule } from 'room/room.module';
     AuthModule,
     JWTModule,
     RoomTypeModule,
-    RoomModule,
+    // RoomModule,
   ],
   providers: [
     // {
