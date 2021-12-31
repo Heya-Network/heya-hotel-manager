@@ -7,13 +7,15 @@ import { RoomType } from './entities/room-type.entity';
 
 @Injectable()
 export class RoomTypeService {
-  constructor(private readonly em: EntityManager) {}
+  constructor(private readonly em: EntityManager) { }
 
   async create(createRoomTypeInput: CreateRoomTypeInput) {
     const hotel = await this.em.findOneOrFail(Hotel, createRoomTypeInput.propertyId);
-    const roomType = new RoomType();
+    const roomType = new RoomType(createRoomTypeInput);
     roomType.name = createRoomTypeInput.name;
-    roomType.property = hotel;
+
+    // @ts-ignore
+    roomType.property = { ...hotel };
     await this.em.persistAndFlush([roomType]);
     return roomType;
   }

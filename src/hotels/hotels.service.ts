@@ -15,7 +15,7 @@ export class HotelsService {
   async create(createHotelDto: CreateHotelDto): Promise<Hotel> {
     const hotel = new Hotel(createHotelDto);
     const user = await this.em.findOneOrFail(Users, createHotelDto.userId);
-    if (user.properties.length === 1) {
+    if (Array.isArray(user?.properties) && user.properties.length === 1) {
       return; //only 1 hotel per user allowed
     }
     user.properties.add(new UserProperty(user, hotel));
