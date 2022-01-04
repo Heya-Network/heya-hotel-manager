@@ -11,7 +11,7 @@ import { ListResponseInterceptor } from 'interceptors/listReponse.interceptor';
 
 @Controller('room-type')
 export class RoomTypeController {
-  constructor(private readonly roomTypeService: RoomTypeService) {}
+  constructor(private readonly roomTypeService: RoomTypeService) { }
 
   @ApiBearerAuth()
   @Roles(Role.Admin, Role.User)
@@ -25,7 +25,7 @@ export class RoomTypeController {
   }
 
   @ApiBearerAuth()
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @UseInterceptors(new ListResponseInterceptor())
   @Get()
@@ -34,11 +34,11 @@ export class RoomTypeController {
   }
 
   @ApiBearerAuth()
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get('admins/:id')
-  findOne(@Param('id') id: number) {
-    return this.roomTypeService.findOne(id);
+  @Get(':id')
+  findOne(@Request() req: JwtRequestDto, @Param('id') id: number) {
+    return this.roomTypeService.findOne(id, req.user);
   }
 
   @ApiBearerAuth()

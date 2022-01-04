@@ -4,6 +4,10 @@ import { Hotel } from 'hotels/entities/hotel.entity';
 import { CreateRoomTypeInput } from './dto/create-room-type.input';
 import { UpdateRoomTypeInput } from './dto/update-room-type.input';
 import { RoomType } from './entities/room-type.entity';
+import { Users } from 'users/entities/user.entity';
+import { Roles } from 'auth/permissions/role.decorator';
+import { Role } from 'auth/permissions/role.enum';
+import { JwtRequestDto } from 'auth/dto/jwt-request.dto';
 
 @Injectable()
 export class RoomTypeService {
@@ -20,11 +24,15 @@ export class RoomTypeService {
     return roomType;
   }
 
-  findAll() {
+  findAll(id?: number) {
     return this.em.getRepository(RoomType).findAndCount({});
   }
 
-  findOne(id: number) {
+  async findOne(id: number, user: any) {
+    // if (!user.roles.includes(Role.Admin)) {
+    //   const findUser = await this.em.find(Users, user.sub);
+    //   console.log(findUser, 'FIND USER');
+    // }
     return this.em.findOne(RoomType, id);
   }
 
