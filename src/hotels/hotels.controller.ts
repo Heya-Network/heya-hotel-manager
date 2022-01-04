@@ -30,13 +30,12 @@ export class HotelsController {
   @UseInterceptors(new ListResponseInterceptor())
   @Get()
   findAll(@Request() req: JwtRequestDto) {
-    const params: { where?: { User?: number } } = {};
+    const where: { User?: number } = {};
 
     if (!req.user.roles.includes(Role.Admin)) {
-      params.where = { User: Number(req.user.sub) };
+      where.User = Number(req.user.sub);
     }
-    // return this.hotelsService.findAll(params);
-    return this.hotelsService.findAllByUser(params);
+    return this.hotelsService.findAll(where);
   }
 
   @ApiBearerAuth()

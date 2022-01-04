@@ -24,22 +24,18 @@ export class HotelsService {
     return hotel;
   }
 
-  async findAll() {
-    return await this.em.getRepository(Hotel).findAndCount({});
-  }
+  // async findAll(where: { User?: number }) {
+  //   return await this.em.getRepository(Hotel).findAndCount({});
+  // }
 
-  async findAllByUser(params: { where?: { User?: number } }) {
+  async findAll(where: { User?: number }) {
+    const [userProperty, total] = await this.em
+      .getRepository(UserProperty)
+      .findAndCount(where, { populate: ['Hotel'] });
+    const hotels = [];
 
-    // @ts-ignore
-    const userProperty = await this.em.getRepository(UserProperty).findAndCount({ User: 1 }, { populate: ["Hotel"], fields: ["Hotel"] });
-    // console.log(userProperty, "USER PROPERTY")
-
-    // userProperty.forEach(prop => {
-    //   console.log(prop.Hotel, "PROPS HOTEL")
-    //   newHotelList.push
-    //   return prop.Hotel;
-    // });
-    return userProperty;
+    userProperty.forEach((prop) => hotels.push(prop.Hotel));
+    return [hotels, total];
   }
 
   findOne(id: number) {
