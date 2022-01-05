@@ -1,4 +1,4 @@
-FROM node:16.13-alpine as development
+FROM node:16.13 as development
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install

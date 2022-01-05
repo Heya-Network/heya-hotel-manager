@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { EntityManager, FilterQuery, MikroORM } from '@mikro-orm/core';
+import { Injectable, Options } from '@nestjs/common';
+import { EntityManager, FilterQuery, MikroORM, Property } from '@mikro-orm/core';
 import { CreateHotelDto } from './dto/create-hotel.dto';
 import { UpdateHotelDto } from './dto/update-hotel.dto';
 import { Hotel } from './entities/hotel.entity';
@@ -9,13 +9,14 @@ import { UserProperty } from 'users/entities/user-property.entity';
 @Injectable()
 export class HotelsService {
   constructor(
-    private readonly em: EntityManager,
-  ) {}
+    private readonly em: EntityManager
+  ) { }
 
   async create(createHotelDto: CreateHotelDto): Promise<Hotel> {
     const hotel = new Hotel(createHotelDto);
     const user = await this.em.findOneOrFail(Users, createHotelDto.userId);
-    if (user.properties.length === 1) {
+    if (Array.isArray(user?.properties) && user.properties.length === 1) {
+      // if (user.properties.length === 1) {
       return; //only 1 hotel per user allowed
     }
     user.properties.add(new UserProperty(user, hotel));
@@ -23,8 +24,18 @@ export class HotelsService {
     return hotel;
   }
 
-  findAll() {
-    return this.em.getRepository(Hotel).findAndCount({});
+  // async findAll(where: { User?: number }) {
+  //   return await this.em.getRepository(Hotel).findAndCount({});
+  // }
+
+  async findAll(where: { User?: number }) {
+    const [userProperty, total] = await this.em
+      .getRepository(UserProperty)
+      .findAndCount(where, { populate: ['Hotel'] });
+    const hotels = [];
+
+    userProperty.forEach((prop) => hotels.push(prop.Hotel));
+    return [hotels, total];
   }
 
   findOne(id: number) {

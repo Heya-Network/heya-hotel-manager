@@ -11,7 +11,7 @@ import { JwtRequestDto } from 'auth/dto/jwt-request.dto';
 
 @Controller('hotels')
 export class HotelsController {
-  constructor(private readonly hotelsService: HotelsService) {}
+  constructor(private readonly hotelsService: HotelsService) { }
 
   @ApiBearerAuth()
   @Roles(Role.Admin, Role.User)
@@ -25,18 +25,23 @@ export class HotelsController {
   }
 
   @ApiBearerAuth()
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @UseInterceptors(new ListResponseInterceptor())
   @Get()
-  findAll() {
-    return this.hotelsService.findAll();
+  findAll(@Request() req: JwtRequestDto) {
+    const where: { User?: number } = {};
+
+    if (!req.user.roles.includes(Role.Admin)) {
+      where.User = Number(req.user.sub);
+    }
+    return this.hotelsService.findAll(where);
   }
 
   @ApiBearerAuth()
   @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Get('admins/:id')
+  @Get(':id')
   findOne(@Param('id') id: number) {
     return this.hotelsService.findOne(id);
   }

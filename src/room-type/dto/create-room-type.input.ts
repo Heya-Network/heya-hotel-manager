@@ -1,12 +1,17 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+// import { InputType, Int, Field } from '@nestjs/graphql';
 
-@InputType()
+// @InputType()
+// export class CreateRoomTypeInput {
+//   @Field(() => Int, { description: 'Example field (placeholder)' })
+//   propertyId: number;
+
+//   @Field(() => String, { description: 'Example field (placeholder)' })
+//   name: string;
+// }
 export class CreateRoomTypeInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
+  /**
+   * The user ID of the owner of the hotel
+   */
   propertyId: number;
-
-  @Field(() => String, { description: 'Example field (placeholder)' })
   name: string;
-
-  
 }
